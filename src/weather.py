@@ -11,6 +11,7 @@ import requests
 import urllib.request, urllib.error
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from datetime import timedelta, datetime
 
 class WeatherData:
@@ -166,7 +167,7 @@ class WeatherData:
         self.headers = self.data.columns.values  # update headers
     
     def fill_missing(self):
-        """ Replace all NO_DATA values with a interpolated value """
+        """ Replaces all NO_DATA values with a interpolated value """
         replaced = 0
         for col in self.data.columns:
             if (self.data[col] == self.NO_DATA).any():
@@ -179,6 +180,7 @@ class WeatherData:
             print('{0} missing values were filled successfully!'.format(replaced))
         
     def daily_averages(self):
+        """ Computes the daily average of the variables using the annual data """
         self.add_date()
         self.data.set_index('Date', inplace=True)
         annual_data = []
@@ -198,22 +200,32 @@ class WeatherData:
             for annual in annual_data:
                 # print(self.years[i], len(annual))
                 date_ = datetime(self.years[i], date.month, date.day).date() # date
-                
                 row = annual.loc[date_]
                 # print(date, date_, row['SR'])
         
                 i += 1
-        #         # print('Before:')
-        #         print(annual)
-        #         # print('Columns: ', annual.columns)
-        #         # annual.set_index('Date', inplace=True)
-        #         # print('After:')
-        #         # print(annual)
-        #         row = annual.loc[date_]
-        #         print(row['SR'])
-        # #         SR.append(row['SR'])
-        # #         i += 1
-        # # print(SR)
+
+    def scatter(self, variables, **kwargs):
+        """ Plots a figure of a selected variable 
+        WARNING: Assumes x-axis is day-of-the-year (DOY) """
+        _xlabel = kwargs.get('xlabel', 'X')
+        _ylabel = kwargs.get('ylabel', '')
+        _filename = kwargs.get('filename', '')
+        _res = kwargs.get('dpi', 300)
+        
+        if _ylabel == '':
+            _ylabel = ' / '.join(variables)
+        
+        plt.figure()
+        for variable in variables:
+            plt.scatter(self.data['DOY'], self.data[variable], label=variable)
+        plt.xlabel(_xlabel)
+        plt.ylabel(_ylabel)
+        plt.legend(loc='best')
+        if _filename != '':
+            plt.savefig(_filename, dpi=_res, bbox_inches='tight')
+        plt.grid(True)
+        plt.show()
 
 
 class BlanneyCriddle:
@@ -290,7 +302,7 @@ if __name__ == '__main__':
     
     # Get annual data and compute daily averages
     start_date = datetime(2003,1,1)
-    end_date = datetime(2020,12,31)
+    end_date = datetime(2003,12,31)
     ws = WeatherData(station, start_date, 'daily')
     ws.set_end_date(end_date)
     ws.get_data()
@@ -299,6 +311,8 @@ if __name__ == '__main__':
     ws.select(selection)
     ws.fill_missing()  # fill missing data
     # ws.daily_averages()
+    ws.scatter(['SR', 'ET0'], xlabel='DOY')
+
     
     # lat = 32.735307
     # months = [11, 12, 1, 2, 3]

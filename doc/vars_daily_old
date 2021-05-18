@@ -1,0 +1,25 @@
+Year (87,88,89,90 etc)
+Day of Year (DOY)
+Station Number
+Air Temp - Max
+Air Temp - Min
+Air Temp - Mean
+RH - Max
+RH - Min
+RH - Mean
+VPD - Mean
+Solar Rad. - Total
+Precipitation - Total
+2" Soil Temp - Max  (changed to  4" in 1999)
+2" Soil Temp - Min  (changed to  4" in 1999)
+2" Soil Temp - Mean (changed to  4" in 1999)
+4" Soil Temp - Max  (changed to 20" in 1999)
+4" Soil Temp - Min  (changed to 20" in 1999)
+4" Soil Temp - Mean (changed to 20" in 1999)
+Wind Speed - Mean
+Wind Vector Magnitude for Day
+Wind Vector Direction for Day
+Wind Direction Standard Deviation for Day
+Max Wind Speed
+Reference ET
+Heat Units (30/12.8 C) (86/55 F)

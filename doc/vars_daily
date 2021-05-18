@@ -1,0 +1,28 @@
+Year
+Day of Year (DOY)
+Station Number
+Air Temp - Max
+Air Temp - Min
+Air Temp - Mean
+RH - Max
+RH - Min
+RH - Mean
+VPD - Mean
+Solar Rad. - Total
+Precipitation - Total
+4" Soil Temp - Max  ( = 2" prior to 1999 )
+4" Soil Temp - Min  ( = 2" prior to 1999 )
+4" Soil Temp - Mean ( = 2" prior to 1999 )
+20" Soil Temp - Max  ( = 4" prior to 1999 )
+20" Soil Temp - Min  ( = 4" prior to 1999 )
+20" Soil Temp - Mean ( = 4" prior to 1999 )
+Wind Speed - Mean
+Wind Vector Magnitude for Day
+Wind Vector Direction for Day
+Wind Direction Standard Deviation for Day
+Max Wind Speed
+Heat Units (30/12.8 C) (86/55 F)                      | positions
+Reference Evapotranspiration (ETo) = Original AZMET   | switched 2003
+Reference Evapotranspiration (ETos) = Penman-Monteith  'New' 2003-Present
+Actual Vapor Pressure - Daily Mean                     'New' 2003-Present
+Dewpoint, Daily Mean                                   'New' 2003-Present

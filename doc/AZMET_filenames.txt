@@ -1,0 +1,43 @@
+https://cals.arizona.edu/AZMET/filename.html
+     First two digits
+     ||
+     0187rd.txt
+       || 
+       Second two digits.
+
+  The first two digits of the filename are the station number.
+ 
+   01 = Tucson         11 = Litchfield          21 = Laveen         
+   02 = Yuma Valley    12 = Phoenix Greenway    22 = Queen Creek
+   03 = Yuma Mesa      13 = Marana              23 = Harquahala
+   04 = Safford        14 = Yuma North Gila     24 = Roll
+   05 = Coolidge       15 = Phoenix Encanto     25 = Ciudad Obregon
+   06 = Maricopa       16 = Eloy                26 = Buckeye
+   07 = Aguila         17 = Dateland            27 = Desert Ridge
+   08 = Parker         18 = Scottsdale          28 = Mohave-2
+   09 = Bonita         19 = Paloma              29 = Mesa
+   10 = Waddell        20 = Mohave              30 = Flagstaff
+        (Citrus Farm)
+
+   31 = Prescott
+   32 = Payson
+   33 = Bowie
+   34 = Kansas Settlement
+
+
+  The second two digits indicate the year: 87, 88, 89, 90, 91, etc.
+  AZMET has NO data prior to 1987.
+
+
+  The next letters in the filenames indicate the format of the data.
+
+     rh = raw hourly data  |-- These raw files are comma deliniated ASCII
+     rd = raw daily data   |   See 'Data Formats' for explaination.
+
+     eh = Hourly/Daily Reports in English units
+     ew = Weekly Reports in English units
+     em = Monthly Reports in English units
+
+     hu = Heat Unit Reports
+     et = Evapotranspiration Reports
+    cot = Weekly Cotton Reports

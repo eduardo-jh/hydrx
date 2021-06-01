@@ -225,18 +225,25 @@ class WeatherData:
         if _filename != '':
             plt.savefig(_filename, dpi=_res, bbox_inches='tight')
         plt.grid(True)
+        plt.xlim(0, 366)
         plt.show()
 
 
-class BlanneyCriddle:
-    def __init__(self, lat, months, north=True):
+class BlanneyCriddle(WeatherData):
+    def __init__(self, station, start_date, timestep, lat, north=True):
         assert lat >= 0 and lat <= 90, 'Incorrect latitude value [0-90]'
+        WeatherData.__init__(self, station, start_date, timestep)
         self.lat = lat
         self.north = north
-        self.months = months
+        self.months = []
         # Set column name according to Northern or Southern hemisphere
         self.hemisphere = 'North' if self.north else 'South'
-    
+        # Update subset of months to compute ET
+        self.calculate_months()
+        
+    def calculate_months(self):
+        self.months = [x for x in range(self.start_date.month, self.end_date.month+1)]
+ 
     def read_daytime_hours(self, filename='../doc/daytime_mean_hours.csv'):
         """ Mean Daily Percentage of Annual Daytime Hours, p, by month for different Latitudes """
         self.daytime_hours_table = pd.read_csv(filename)
@@ -245,11 +252,12 @@ class BlanneyCriddle:
         """ Linear interpolation """
         return y0 + (x - x0) * ((y1-y0) / (x1-x0))
     
-    def daytime_hours(self, colname='p'):
+    def percent_daytime_hours(self, colname='p'):
         """ Mean Daily Percentage of Annual Daytime Hours, p, by month
         for the especified latitude
         colname: str, the name of the column to add """
         assert type(colname) is str, 'The column name should be a string'
+        self.calculate_months()  # Update the months list to compute ET
         self.read_daytime_hours()
         # Column headers of the daytime houts table are latitudes in degrees
         latitudes = [int(x) for x in self.daytime_hours_table.columns.values[2:]]
@@ -284,6 +292,16 @@ class BlanneyCriddle:
             daytime_per_month[colname] = interp
         
         self.daytime_per_month = daytime_per_month.reset_index(drop=True)
+        print(self.daytime_per_month)
+        
+    def daytime_hours_daily(self):
+        """ Set the Mean Daily Percentage of Annual Daytime Hours, p, for
+        each day of the month """
+        assert 'Date' in self.data.columns, 'No Date column in data'
+        p_daily = []
+        # for date in self.data['Date']:
+        #     if date.month self.daytime_per_month[self.hemisphere]:
+        
 
 if __name__ == '__main__':
 
@@ -293,16 +311,16 @@ if __name__ == '__main__':
     day = 1
     duration = 120
     
-    # # Test for a preset duration
+    # # 1. TEST WEATHER CLASS FOR A PRESET DURATION
     # ws = WeatherData(station, datetime(year,month,day), 'daily')
     # ws.set_period(duration)
     # ws.get_data_period()
-    
     # print(ws)
     
+    # 2. TEST WEATHER CLASS WITH START AND END DATES
     # Get annual data and compute daily averages
-    start_date = datetime(2003,1,1)
-    end_date = datetime(2003,12,31)
+    start_date = datetime(2004,1,1)
+    end_date = datetime(2004,12,31)
     ws = WeatherData(station, start_date, 'daily')
     ws.set_end_date(end_date)
     ws.get_data()
@@ -311,13 +329,19 @@ if __name__ == '__main__':
     ws.select(selection)
     ws.fill_missing()  # fill missing data
     # ws.daily_averages()
-    ws.scatter(['SR', 'ET0'], xlabel='DOY')
-
+    ws.scatter(['ET0'], xlabel='DOY')
     
+    # # 3. TEST BLANEY-CRIDDLE CLASS FOR EVAPOTRANSPIRATION
     # lat = 32.735307
-    # months = [11, 12, 1, 2, 3]
     # # lon = -114.530297
-    # bc = BlanneyCriddle(lat, months, north=False)
-    # bc.daytime_hours()
+    # bc = BlanneyCriddle(station, start_date, 'daily', lat, north=False)
+    # bc.set_end_date(end_date)
+    # bc.get_data()
+    # bc.select(selection)
+    # bc.fill_missing()  # fill missing data
+    # bc.add_date()
+    # # Evapotranspiration calculations
+    # bc.percent_daytime_hours()
+    # bc.daytime_hours_daily()
     
     

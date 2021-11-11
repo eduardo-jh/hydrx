@@ -33,7 +33,9 @@ class WeatherData:
         self.locations = self.read_values('../doc/AZ_locations')
         self.weather_station_id()
         # Check whether 'daily' or 'hourly' data
-        self.headerfile = '../doc/vars_daily'  if self.timestep == 'daily' else '../doc/vars_hourly'
+        # self.headerfile = '../doc/vars_daily'  if self.timestep == 'daily' else '../doc/vars_hourly'
+        # Use short column header
+        self.headerfile = '../doc/vars_daily_short'  if self.timestep == 'daily' else '../doc/vars_hourly'
         self.dtype = 'rd' if self.timestep == 'daily' else 'rh'  # rh: raw daily, rh: raw hourly
         self.headers = self.read_values(self.headerfile)
         print('Creating weather data for {0}... successful!'.format(self.station))
